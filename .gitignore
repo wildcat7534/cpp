@@ -1,4 +1,5 @@
 *.o
 *.aout
+*.swp
 megaphone
 phonebook
