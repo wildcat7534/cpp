@@ -6,16 +6,16 @@ class Fixed
 private:
 	int _fix;
 	float _flt;
-	int _bit = 8;
+	int _bit;
 
 public:
 	// default
-	Fixed() : _fix(0)
+	Fixed() : _fix(0), _bit(8)
 	{
 		//std::cout << "Default constructor called " << std::endl;
 	}
 	// parametized entier constant
-	Fixed(int nb)
+	Fixed(int nb) : _bit(8)
 	{
 		//std::cout << "Int constructor called " << std::endl;
 		_fix = nb * 256;
