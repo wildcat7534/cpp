@@ -22,12 +22,12 @@ class Fixed {
 		Fixed operator-(const Fixed& other) const;
 		Fixed operator/(const Fixed& other) const;
 		// comparisons
-		bool operator>(const Fixed& other) const;
-		bool operator<(const Fixed& other) const;
-		bool operator>=(const Fixed& other) const;
-		bool operator<=(const Fixed& other) const;
-		bool operator==(const Fixed& other) const;
-		bool operator!=(const Fixed& other) const;
+		int operator>(const Fixed& other) const;
+		int operator<(const Fixed& other) const;
+		int operator>=(const Fixed& other) const;
+		int operator<=(const Fixed& other) const;
+		int operator==(const Fixed& other) const;
+		int operator!=(const Fixed& other) const;
 		// increment / decrement
 		Fixed& operator++();   // pré-incrément
 		Fixed operator++(int); // post-incrément
@@ -37,6 +37,8 @@ class Fixed {
 		int getRawBits() const;
 		int toInt() const;
 		float toFloat() const;
+		static float max( Fixed a , Fixed b);
+		static float min( Fixed a , Fixed b);
 };
 
 std::ostream &operator<<(std::ostream &os, const Fixed &f);

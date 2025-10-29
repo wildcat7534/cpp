@@ -1,18 +1,18 @@
 #include "Fixed.hpp"
 #include <cmath>
 // default
-Fixed::Fixed() : _nb(0), _bit(8) {
+Fixed::Fixed() : _fix(0), _bit(8) {
 	std::cout << "Default constructor called " << this << std::endl;
 }
 // parametized integer constant
 Fixed::Fixed(int nb) : _bit(8) {
 	std::cout << "Int constructor called " << this << std::endl;
-	_nb = nb * 256;
+	_fix = nb * 256;
 }
 // parametized float constant
 Fixed::Fixed(const float flt) : _bit(8) {
 	std::cout << "Float constructor called " << this << std::endl;
-	_nb = static_cast<int>(roundf(flt * (1 << 8)));
+	_fix = static_cast<int>(roundf(flt * (1 << 8)));
 }
 // copy object
 Fixed::Fixed(const Fixed& other) {
@@ -23,7 +23,7 @@ Fixed::Fixed(const Fixed& other) {
 Fixed& Fixed::operator=(const Fixed &other){
 	std::cout << "Copy assignement operator called " << this << std::endl ;
 	if (this != &other){
-		_nb = other.getRawBits();
+		_fix = other.getRawBits();
 		return *this;
 	}
 	return *this;
@@ -100,23 +100,23 @@ Fixed::~Fixed(){
 }
 int Fixed::getRawBits() const {
 	std::cout << "getRawBits member function called " << this << std::endl;
-	return _nb;
+	return _fix;
 }
 int Fixed::toInt() const {
-	return _nb >> _bit;
+	return _fix >> _bit;
 }
 float Fixed::toFloat() const {
-	return static_cast<float>(_nb) / (1 << _bit);
+	return static_cast<float>(_fix) / (1 << _bit);
 }
-static float Fixed::max( Fixed a , Fixed b) {
-	if (a._fix > b._fix){
+float Fixed::max( Fixed a , Fixed b) {
+	if (a.getRawBits() > b.getRawBits()){
 		return a.toFloat();
 	}
 	else
 		return b.toFloat();
 }
-static float min( Fixed a , Fixed b) {
-	if (a._fix < b._fix){
+float Fixed::min( Fixed a , Fixed b) {
+	if (a.getRawBits() < b.getRawBits()){
 		return a.toFloat();
 	}
 	else
