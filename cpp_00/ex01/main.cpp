@@ -1,9 +1,7 @@
 #include <iostream>
 #include <string>
-#include <regex>
-#include <thread>
-#include <chrono>
-#include <iomanip>
+
+
 #define RED     "\033[31m"
 #define MAGENTA "\033[35m"
 #define CYAN    "\033[36m"
@@ -18,124 +16,47 @@ std::string formatField(const std::string& input) {
     else
         return input;
 }
+// ADD, seulement dans le main, gerer avec la classe contact (appeler par phonebook) 
+// le process d'ajout d'un contact
+// SEARCH, gerer par phonebook
+// CTRL - D et CTRL - C a gerer 
+// VALGRIND --leaks=full --track-origins=yes --show-leak-kinds=all
+// corriger affichage debut main 8 contacts
+
 
 int	main(){
 
-	Contact ariane; 
-	Contact clement;
-	Contact paul;
+	// Contact clement("Clement", "Massol", "WiLDCaT", "0612270367", "j'aime les bateaux");
+	// Contact ariane("Ariane", "Saulnier", "AriA", "0612345789", "j'aime les chiens");
+	// Contact paul("paul", "KouaneKouaneKouane", "PetitPaul", "0712345689", "j'aime les chats");
 
-	clement.setFirstName("Clement");
-	clement.setLastName("Massol");
-	clement.setNickname("WiLDCaT");
-	clement.setPhoneNumber(std::stoi("0612270367"));
-	clement.setSecret("j'aime les bateaux");
-	ariane.setFirstName("Ariane");
-	ariane.setLastName("Saulnier");
-	ariane.setNickname("AriA");
-	ariane.setPhoneNumber(std::stoi("0612345789"));
-	ariane.setSecret("j'aime les chiens");	
-	paul.setFirstName("paul");
-	paul.setLastName("KouaneKouaneKouane");
-	paul.setNickname("PetitPaul");
-	paul.setPhoneNumber(std::stoi("0712345689"));
-	paul.setSecret("j'aime les chats");
-
-	PhoneBook book;
+	// PhoneBook book;
 	
-	book.addContact(clement);
-	book.addContact(ariane);
-	book.addContact(paul);
+	// book.addContact(clement);
+	// book.addContact(ariane);
+	// book.addContact(paul);
+	// std::cout << book.getContact(1).getFirstName() << std::endl;
+	// std::cout << book.getContact(2).getFirstName() << std::endl;
+	// std::cout << book.getContact(3).getFirstName() << std::endl;
 
 	std::cout << std::endl;
 	std::cout << BOLD << RED <<"       ********** Welcome to your PhoneBook **********" << RESET << std::endl<< std::endl;
-	std::cout << BOLD << "You can store up to 3 contacts." << RESET << std::endl;
-	std::cout << BOLD << "exemple deja rempli avec 3 contacts." << RESET << std::endl;
-	std::cout << book.getContact(1).getFirstName() << std::endl;
-	std::cout << book.getContact(2).getFirstName() << std::endl;
-	std::cout << book.getContact(3).getFirstName() << std::endl;
+	std::cout << BOLD << "You can store up to 8 contacts." << RESET << std::endl;
+	std::cout << BOLD << "exemple deja rempli avec 3 contacts (mettre limite a 3)" << RESET << std::endl;
 
 	while (1){
-		//PhoneBook book;
+		PhoneBook book;
 		std::string command;
-		const std::regex motif("^(06|07)\\d{8}$");
 		std::cout << std::endl << "Use the commands :"<< MAGENTA << " ADD"<< RESET << ", "<< MAGENTA << "SEARCH"<< RESET << " or" << MAGENTA << " EXIT :" << RESET << std::endl;
 		std::cout << ">>> ";
 		if (getline(std::cin, command))
 		{
 			if (command == "ADD"){
 				std::cout << "** Command: "<< MAGENTA << command << RESET << " received." << std::endl;
-				Contact 	newContact;
-				std::string firstName;
-				std::string lastName;
-				std::string nickname;
-				std::string	phoneNumber;
-				std::string darkSecret;
 
-				std::cout << "	Enter first name: ";
-				while (getline(std::cin, firstName)){
-					if (firstName == ""){
-						std::cout << "cannot be void !" << std::endl;
-						std::cout << "	Enter first name: ";
-					}
-					else{
-						newContact.setFirstName(firstName);
-						break;
-					}
-				}
-				std::cout << "	Enter last name: ";
-				while (getline(std::cin, lastName)){
-					if (lastName == ""){
-						std::cout << "cannot be void !" << std::endl;
-						std::cout << "	Enter last name: ";
-					}
-					else{
-						newContact.setLastName(lastName);
-						break;
-					}
-				}
-				std::cout << "	Enter nickname : ";
-				while (getline(std::cin, nickname)){
-					if (nickname == ""){
-						std::cout << "cannot be void !" << std::endl;
-						std::cout << "	Enter nickname : ";
-					}
-					else{
-						newContact.setNickname(nickname);
-						break;
-					}
-				}
-				std::cout << "	Enter phone number: ";
-				while (getline(std::cin, phoneNumber)){
-					if (phoneNumber == ""){
-						std::cout << "cannot be void !" << std::endl;
-						std::cout << "	Enter phone number: ";
-					}
-					else if ((std::regex_match(phoneNumber, motif) == 0)){
-						std::cout << "Not a phone number." << std::endl;
-						std::cout << "	Enter phone number: ";
-					}
-					else{
-						int phone = std::stoi(phoneNumber);
-						newContact.setPhoneNumber(phone);
-						break;
-					}
-				}
-				std::cout << "	Enter darki secret (or not so dark..): ";
-				while (getline(std::cin, darkSecret)){
-					if (darkSecret == ""){
-						std::cout << "cannot be void !" << std::endl;
-						std::cout << "	Enter darki secret (or not so dark..): ";
-					}
-					else{
-						newContact.setSecret(darkSecret);
-						break;
-					}
-				}
-				std::cout << std::endl << ">> Saving contact... please wait..." << std::endl;
-				std::this_thread::sleep_for(std::chrono::seconds(2));
-				book.addContact(newContact);
-				std::cout << std::endl << ">> Contact saved !" << std::endl;
+
+				book.addContact();
+				
 			}
 
 			if (command == "SEARCH"){
@@ -144,7 +65,7 @@ int	main(){
 				std::cout << std::endl;
 				int i = 1;
 				std::cout << std::setw(10) << "ID" << "|" 
-					<< std::setw(10) << "FirstName" << "|" 
+					<< std::setw(10) << "FirstName" << "|"
 					<< std::setw(10) << "LastName" << "|" 
 					<< std::setw(10) << "Nickname" << "|" << std::endl;
 				std::cout << "[DEBUG] Nb de contact :" << book.getNbContact() << std::endl;
