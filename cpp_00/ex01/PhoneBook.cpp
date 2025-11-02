@@ -1,43 +1,125 @@
-#include <iostream>
-#include "Contact.cpp"
-#include <thread>
-#include <chrono>
-#include <iomanip>
+#include "PhoneBook.hpp"
+#include "Contact.hpp"
 
-class PhoneBook{
-	private:
-		Contact _tableau[8];
-		int		_nbContact = 0;
-		//int		_limitContact = 3; // pour le test/dev on met 3
-		int		_limitContact = 8;
 
-	public:
-		PhoneBook(){}
+std::string formatField(const std::string& input) {
+    if (input.length() > 10)
+        return input.substr(0, 9) + ".";
+    else
+        return input;
+}
 
-		void	addContact(){
-			if (this->_nbContact >= _limitContact){
-				std::cout << std::endl << "[/\\ CONTACT LIMIT REACHED]" << std::endl;
-				_nbContact = _limitContact;
-			}
-			else
-				this->_nbContact++;
 
-			Contact 	newContact;
-			newContact.askAndSetContactInfo();
-			newContact.printContactInfo();
 
-			std::cout << std::endl << ">> Saving contact... please wait..." << std::endl;
-			std::this_thread::sleep_for(std::chrono::seconds(2));
-			this->_tableau[_nbContact] = newContact;
-			std::cout << std::endl << ">> Contact saved !" << std::endl;
-		}
-		Contact&	getContact(int nb){
-			if (nb < 1 || nb > _limitContact) {
-				return *new Contact();
-			}
-			return _tableau[nb];
-		}
-		int	getNbContact(){
-				return (_nbContact);
-		}
-};
+void	PhoneBook::addContact(Contact newContact) {
+	// change for using a modulo to overwrite old contacts when limit reached
+
+	if (this->_nbContact >= _limitContact){
+		std::cout << std::endl << "[/\\ CONTACT LIMIT REACHED]" << std::endl;
+		this->_indexContact = this->_modulo % _limitContact;
+		this->_modulo++;
+		std::cout << ">> The new contact will overwrite the contact n°" << this->_indexContact + 1 << std::endl;
+		_repertory[this->_indexContact].printContactInfo();
+		std::cout << std::endl << ">> Saving contact... please wait..." << std::endl;
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		this->_repertory[this->_indexContact] = newContact;
+		_repertory[this->_indexContact].printContactInfo();
+		std::cout << std::endl << ">> Contact saved !" << std::endl;
+		return ;
+	}
+	//newContact.askAndSetContactInfo();
+	newContact.printContactInfo();
+	
+	std::cout << std::endl << ">> Saving contact... please wait..." << std::endl;
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+	this->_repertory[_indexContact] = newContact;
+	this->_nbContact++;
+	this->_indexContact++;
+	std::cout << std::endl << ">> Contact saved !" << std::endl;
+}
+
+void	PhoneBook::addContact(){
+	if (this->_nbContact >= _limitContact){
+		std::cout << std::endl << "[/\\ CONTACT LIMIT REACHED]" << std::endl;
+		this->_indexContact = this->_modulo % _limitContact;
+		this->_modulo++;
+		std::cout << ">> The new contact will overwrite the contact n°" << this->_indexContact + 1 << std::endl;
+		_repertory[this->_indexContact].printContactInfo();
+		_repertory[this->_indexContact].askAndSetContactInfo();
+		_repertory[this->_indexContact].printContactInfo();
+		std::cout << std::endl << ">> Saving contact... please wait..." << std::endl;
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		std::cout << std::endl << ">> Contact saved !" << std::endl;
+		return ;
+	}
+	Contact 	newContact;
+	newContact.askAndSetContactInfo();
+	newContact.printContactInfo();
+
+	std::cout << std::endl << ">> Saving contact... please wait..." << std::endl;
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+	this->_repertory[_indexContact] = newContact;
+	this->_nbContact++;
+	this->_indexContact++;
+	std::cout << std::endl << ">> Contact saved !" << std::endl;
+}
+
+Contact&	PhoneBook::getContact(int nb) {
+	if (nb < 1 || nb > _limitContact) {
+		return *new Contact();
+	}
+	return _repertory[nb - 1];
+}
+
+int	PhoneBook::getNbContact() const {
+	return (_nbContact);
+}
+
+void PhoneBook::searchContact() {
+	std::cout << "Searching contact..." << std::endl;
+	int i = 1;
+	std::cout << std::setw(10) << "ID" << "|" 
+		<< std::setw(10) << "FirstName" << "|"
+		<< std::setw(10) << "LastName" << "|" 
+		<< std::setw(10) << "Nickname" << "|" << std::endl;
+	std::cout << "[DEBUG] Nb de contact :" << this->getNbContact() << std::endl;
+	std::cout << std::endl;
+	while (this->getNbContact() != 0 && this->getNbContact() >= i){
+		std::cout << CYAN << BOLD ;
+		std::cout << std::setw(10) << i << "|" 
+		<< std::setw(10) << formatField(this->getContact(i).getFirstName()) << "|" 
+		<< std::setw(10) << formatField(this->getContact(i).getLastName()) << "|" 
+		<< std::setw(10) << formatField(this->getContact(i).getNickname()) << "|" 
+		<< std::endl;
+		std::cout << RESET;
+		i++;
+	}
+	std::cout << std::endl;
+	std::string id;
+	std::cout << "select ID and we will search it for you :) : ";
+	getline(std::cin, id);
+	if (id.length() > 8) {
+		std::cout << "ID too long." << std::endl;
+		return ;
+	}
+	if (id.empty()) {
+		std::cout << "ID cannot be empty." << std::endl;
+		return ;
+	}
+	if (!std::all_of(id.begin(), id.end(), ::isdigit)) {
+		std::cout << "ID must be a number." << std::endl;
+		return ;
+	}
+	if (std::stoi(id) < 1 || std::stoi(id) > this->getNbContact()) {
+		std::cout << "ID out of range." << std::endl;
+		return ;
+	}
+	int idint = std::stoi(id);
+	std::cout << "ID :" << id << std::endl;
+	std::cout << this->getContact(idint).getFirstName() << std::endl;
+	std::cout << this->getContact(idint).getLastName() << std::endl;
+	std::cout << this->getContact(idint).getNickname() << std::endl;
+	std::cout << this->getContact(idint).getPhoneNumber() << std::endl;
+	std::cout << this->getContact(idint).getSecret() << std::endl;
+}
+
