@@ -1,20 +1,21 @@
 NAME = phonebook
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp PhoneBook.cpp
-INCLUDES = PhoneBook.hpp Contact.hpp
+SRCS = main.cpp PhoneBook.cpp Contact.cpp
+HEADERS = PhoneBook.hpp Contact.hpp
+INCLUDES =
 OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
 
 all: $(NAME)
 
-# Phase d'assemblage
-$(OBJS): %.o: %.cpp $(INCLUDES)
-	$(CC) $(CFLAGS) -c $< -o $@
+# Compilation: .cpp -> .o
+%.o: %.cpp $(HEADERS)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# Phase de compilation
+# Edition des liens: .o -> executable
 $(NAME): $(OBJS)
-		$(CC) $(INCLUDES) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 clean:
 		$(RM) $(OBJS)
@@ -23,5 +24,9 @@ fclean: clean
 		$(RM) $(NAME)
 
 re: fclean all
+
+test: re
+	# lower the per-process open-file limit for valgrind (workaround for some Docker/envs)
+	ulimit -n 1024 && valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME)
 
 .PHONY: all clean fclean re

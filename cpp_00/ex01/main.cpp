@@ -1,5 +1,7 @@
+#include <csignal>
+#include <iostream>
+#include <unistd.h>
 #include "PhoneBook.hpp"
-#include "Contact.hpp"
 
 // ADD, seulement dans le main, gerer avec la classe contact (appeler par phonebook) 
 // le process d'ajout d'un contact
@@ -8,8 +10,25 @@
 // VALGRIND --leaks=full --track-origins=yes --show-leak-kinds=all
 // corriger affichage debut main 8 contacts
 
+// Interception du CTRL C
+
+
+volatile sig_atomic_t g_running = 1;
+
+// Signal handler: write a message, close stdin to interrupt getline and
+// set the running flag so main loop can exit cleanly (destructors run).
+void signalHandler(int /*signum*/) {
+	//const char msg[] = "\n*********  Interruption signal received. Exiting... ***********\n";
+	std::cout << "\n*********  Interruption signal received. Exiting... ***********" << std::endl;
+	//write(STDOUT_FILENO, msg, sizeof(msg) - 1);
+	g_running = 0;            // sig_atomic_t safe
+	close(STDIN_FILENO);     // async-signal-safe: will make getline fail with EOF/error
+}
 
 int	main(){
+	signal(SIGINT, signalHandler);
+	signal(SIGTERM, signalHandler);
+
 
 	// [DEBUG] exemple deja rempli avec 8 contacts //////
 	Contact clement("Clement", "Massol", "WiLDCaT", "0612270367", "j'aime Baldur's Gate");
@@ -41,26 +60,32 @@ int	main(){
 	std::cout << BOLD << "[DEBUG] Exemple deja rempli avec 8 contacts" << RESET << std::endl;
 
 	//PhoneBook book; // decommenter si [DEBUG] exemple deja rempli avec 8 contacts est desactive
-	while (1){
+	while (g_running) {
 		std::string command;
 		std::cout << std::endl << "Use the commands :"<< MAGENTA << " ADD"<< RESET << ", "<< MAGENTA << "SEARCH"<< RESET << " or" << MAGENTA << " EXIT :" << RESET << std::endl;
 		std::cout << ">>> ";
-		if (getline(std::cin, command))
+		if (!std::getline(std::cin, command))
 		{
-			if (command == "ADD"){
-				std::cout << "** Command: "<< MAGENTA << command << RESET << " received." << std::endl;
-				myPhoneBook.addContact();
-			}
+			std::cout << std::endl << "*********  Avez-vous un probleme ? ***********" << std::endl;
+			break;
+		}
+		if (!g_running) {
+			break;
+		}
 
-			if (command == "SEARCH"){
-				std::cout << "** Command: " << MAGENTA << command << RESET << " received." << std::endl;
-				std::cout << std::endl;
-				myPhoneBook.searchContact();
-			}
-			if (command == "EXIT"){
-				std::cout << "*********  Merci au revoir :)  ***********" << std::endl;
-				break;
-			}
+		if (command == "ADD"){
+			std::cout << "** Command: "<< MAGENTA << command << RESET << " received." << std::endl;
+			myPhoneBook.addContact();
+		}
+
+		if (command == "SEARCH"){
+			std::cout << "** Command: " << MAGENTA << command << RESET << " received." << std::endl;
+			std::cout << std::endl;
+			myPhoneBook.searchContact();
+		}
+		if (command == "EXIT"){
+			std::cout << "*********  Merci au revoir :)  ***********" << std::endl;
+			break;
 		}
 	}
 

@@ -1,7 +1,8 @@
-#include <iostream>
-#include <thread>
-#include <chrono>
+#ifndef PHONEBOOK_HPP
+#define PHONEBOOK_HPP
+
 #include <string>
+#include "Contact.hpp"
 
 #define RED     "\033[31m"
 #define MAGENTA "\033[35m"
@@ -9,21 +10,22 @@
 #define BOLD    "\033[1m"
 #define RESET   "\033[0m"
 
-class PhoneBook{
+class PhoneBook {
 	private:
 		Contact _repertory[8];
-		int		_nbContact = 0;
-		int		_indexContact = 0;
-		int		_modulo = 8;
+		int		_nbContact;
+		int		_indexContact;
+		int		_modulo;
 		//int		_limitContact = 4; // pour le test/dev on met 4
-		int		_limitContact = 8;
+		int		_limitContact;
 
 	public:
-		PhoneBook() {}
-		void	addContact(Contact newContact) {}
-		void	addContact() {}
-		Contact&	getContact(int nb) {}
-		int	getNbContact() const {}
-		void searchContact() {}
+		PhoneBook();
+		void	addContact(Contact newContact);
+		void	addContact();
+		Contact&	getContact(int nb);
+		int	getNbContact() const;
+		void searchContact();
 };
 
+#endif
