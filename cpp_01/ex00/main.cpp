@@ -2,9 +2,13 @@
 
 int main(){
     Zombie *ariane;
-    ariane = newZombie("Ariane");
+    ariane = newZombie("Ariiiiane");
     delete ariane;
-    randomChump("Clement");
+    randomChump("Clemennnnnt");
 
     Zombie Kamila("Kamilaaa");
+    Kamila.announce();
+    Zombie lapinou("Lapinouuuuu");
+    lapinou.announce();
+    return 0;
 }

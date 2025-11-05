@@ -1,22 +1,33 @@
 #include <iostream>
+#include <fstream>
 
-int	main(int arc, char **arv){
+int main (int arc, char **arv){
 
-	if (arc != 3){
-		std::cout << "error: usage <file> <s1> <s2> \
-			<filename> and copy its content into a new file \
-			<filename>.replace, replacing every occurrence of s1 with s2." << std::endl;
-		return (1);
-	}
-	// try to open file and read it
-	if (  ){
+    int pos = 0;
+    int start = 0;
+    std::string stash;
+    std::string stash_finale = "";
 
-	}
+    std::ifstream file(arv[1]);
+    std::string buffer;
+    while (getline(file, buffer)){
+        stash.append(buffer + '\n');
 
-	//fn qui cherche s1 et remplace par s2
-	while (){
-	}
+    }
+    while ((pos = stash.find("void", start)) != std::string::npos){
+        //pos = buffer.find("HumanB");
+        std::cout << "****POSITION : ";
+        std::cout << pos << std::endl;
+        stash_finale += stash.substr(start,pos - start);
+        start = pos + 4 + 1;
+    }
+	stash_finale += stash.substr(start,pos - start);
+    std::cout << stash << std::endl;
+    std::cout << "******************************************************" << std::endl;
 
-	//fn qui crée le fichier .replace
+    std::cout << stash_finale << std::endl;
+
+    
+
 
 }

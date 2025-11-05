@@ -9,8 +9,8 @@ class Weapon{
 
     public:
         Weapon(std::string typeName);
-         std::string& getType() ;
+        std::string& getType();
         void setType(std::string newType);
 };
 
-#endif // WEAPON_HPP
+#endif
