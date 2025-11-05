@@ -22,10 +22,6 @@ void Animal::getType(){
 	std::cout << "Type : " << this->_type << std::endl;
 }
 
-void printThis(){
-	std::cout << "This : " << this << std::endl;
-}
-
 void Animal::makeSound(){
 	std::cout << "Animals make sound" << std::endl;
 }
