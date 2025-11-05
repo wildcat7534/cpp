@@ -6,6 +6,8 @@ HEADERS =
 OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
 
+VG = valgrind -s --leak-check=full --show-leak-kinds=all
+
 all: $(NAME)
 
 # Compilation: .cpp -> .o initialization
@@ -25,7 +27,27 @@ fclean: clean
 re: fclean all
 
 test: re
-	# lower the per-process open-file limit for valgrind (workaround for some Docker/envs)
-	ulimit -n 1024 && valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME)
+	@rm -f *.replace
+	@printf "Running tests with Valgrind...\n\n"
+
+	@printf "Test 1: Replace 'truc' with 'bidule' in .test.txt\n"
+	@- $(VG) ./$(NAME) .test.txt "truc" "bidule"
+
+	@chmod ugo-r .test2.txt
+	@printf "Test 2: Replace 'truc' with '' in .test2.txt\n"
+	@- $(VG) ./$(NAME) .test2.txt "truc" ""
+	@chmod ugo+r .test2.txt
+
+	@printf "Test 3: Replace 'truc' with '' in .test3.txt\n"
+	@- $(VG) ./$(NAME) .test3.txt "truc" ""
+
+	@printf "Test 4: Replace 'truc' with '' in .test4.txt\n"
+	@- $(VG) ./$(NAME) .test4.txt "truc" ""
+
+	@printf "Test 5: Replace '' with '' in .test4.txt\n"
+	@- $(VG) ./$(NAME) .test4.txt "" ""
+
+	@printf "Test 6: Replace \\\\n with '*' in .test6.txt\n"
+	@- $(VG) ./$(NAME) .test6.txt $$'\n' "*"
 
 .PHONY: all clean fclean re
