@@ -1,5 +1,5 @@
 #include "HumanB.hpp"
 
-HumanB::HumanB(std::string name) {this->name = name;}
-void HumanB::setWeapon(Weapon &newWeapon){weapon = &newWeapon;}
-void HumanB::attack(){std::cout << name << ": attack with weapon " << this->weapon->getType() << std::endl;}
+HumanB::HumanB(std::string name) {_name = name;}
+void HumanB::setWeapon(Weapon &newWeapon){_weapon = &newWeapon;}
+void HumanB::attack(){std::cout << _name << ": attack with weapon " << _weapon->getType() << std::endl;}
