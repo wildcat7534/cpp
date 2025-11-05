@@ -5,6 +5,7 @@ SRCS = megaphone.cpp
 HEADERS = 
 OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
+VG = valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 all: $(NAME)
 
@@ -25,7 +26,6 @@ fclean: clean
 re: fclean all
 
 test: re
-	# lower the per-process open-file limit for valgrind (workaround for some Docker/envs)
-	ulimit -n 1024 && valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME)
+	$(VG) ./$(NAME)
 
 .PHONY: all clean fclean re
