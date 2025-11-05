@@ -25,7 +25,7 @@ fclean: clean
 re: fclean all
 
 test: re
-	# lower the per-process open-file limit for valgrind (workaround for some Docker/envs)
-	ulimit -n 1024 && valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME)
+	valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME)
+	valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME) "DEBUG"
 
 .PHONY: all clean fclean re
