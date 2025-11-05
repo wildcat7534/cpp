@@ -28,6 +28,7 @@ Fixed& Fixed::operator=(const Fixed &other){
 	}
 	return *this;
 }
+// destructor
 Fixed::~Fixed(){
 	std::cout << this << " is destroyed" << std::endl;
 }

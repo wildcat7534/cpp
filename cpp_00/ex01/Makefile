@@ -3,17 +3,16 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 SRCS = main.cpp PhoneBook.cpp Contact.cpp
 HEADERS = PhoneBook.hpp Contact.hpp
-INCLUDES =
 OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
 
 all: $(NAME)
 
-# Compilation: .cpp -> .o
+# Compilation: .cpp -> .o initialization
 %.o: %.cpp $(HEADERS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# Edition des liens: .o -> executable
+# Edition des liens: .o -> executable compilation
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 

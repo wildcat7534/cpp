@@ -81,12 +81,12 @@ int	PhoneBook::getNbContact() const {
 void PhoneBook::searchContact() {
 	std::cout << "Searching contact..." << std::endl;
 	int i = 1;
+	std::cout << "Nb de contact :" << this->getNbContact() << std::endl << std::endl;
 	std::cout << std::setw(10) << "ID" << "|" 
 		<< std::setw(10) << "FirstName" << "|"
 		<< std::setw(10) << "LastName" << "|" 
 		<< std::setw(10) << "Nickname" << "|" << std::endl;
-	std::cout << "[DEBUG] Nb de contact :" << this->getNbContact() << std::endl;
-	std::cout << std::endl;
+	//std::cout << std::endl;
 	while (this->getNbContact() != 0 && this->getNbContact() >= i){
 		std::cout << CYAN << BOLD ;
 		std::cout << std::setw(10) << i << "|" 
@@ -109,19 +109,16 @@ void PhoneBook::searchContact() {
 		std::cout << "ID too long." << std::endl;
 		return ;
 	}
-	int int_id = std::atoi(id.c_str());
-	if (int_id > 8) {
-		std::cout << "ID too long." << std::endl;
+	if (!is_digit(id[0])) {
+		std::cout << "ID " << id << " must be a number." << std::endl;
 		return ;
 	}
-	if (int_id < 1 || int_id > this->getNbContact()) {
+	int int_id = std::atoi(id.c_str());
+	if (int_id < 1 || int_id > this->getNbContact() || int_id > 8) {
 		std::cout << "ID out of range." << std::endl;
 		return ;
 	}
-	if (!(is_digit(int_id))) {
-		std::cout << "ID must be a number." << std::endl;
-		return ;
-	}
+
 	std::cout << "ID :" << id << std::endl;
 	std::cout << this->getContact(int_id).getFirstName() << std::endl;
 	std::cout << this->getContact(int_id).getLastName() << std::endl;

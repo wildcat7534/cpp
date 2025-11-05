@@ -3,26 +3,14 @@
 #include <unistd.h>
 #include "PhoneBook.hpp"
 
-// ADD, seulement dans le main, gerer avec la classe contact (appeler par phonebook) 
-// le process d'ajout d'un contact
-// SEARCH, gerer par phonebook
-// CTRL - D et CTRL - C a gerer 
-// VALGRIND --leaks=full --track-origins=yes --show-leak-kinds=all
-// corriger affichage debut main 8 contacts
-
-// Interception du CTRL C
-
-
 volatile sig_atomic_t g_running = 1;
 
 // Signal handler: write a message, close stdin to interrupt getline and
 // set the running flag so main loop can exit cleanly (destructors run).
 void signalHandler(int /*signum*/) {
-	//const char msg[] = "\n*********  Interruption signal received. Exiting... ***********\n";
 	std::cout << "\n*********  Interruption signal received. Exiting... ***********" << std::endl;
-	//write(STDOUT_FILENO, msg, sizeof(msg) - 1);
-	g_running = 0;            // sig_atomic_t safe
-	close(STDIN_FILENO);     // async-signal-safe: will make getline fail with EOF/error
+	g_running = 0;
+	close(STDIN_FILENO); // async-signal-safe: will make getline fail with EOF/error
 }
 
 int	main(){
@@ -30,7 +18,7 @@ int	main(){
 	signal(SIGTERM, signalHandler);
 
 
-	// [DEBUG] exemple deja rempli avec 8 contacts //////
+/* 	// [DEBUG] exemple deja rempli avec 8 contacts /////////////////////////
 	Contact clement("Clement", "Massol", "WiLDCaT", "0612270367", "j'aime Baldur's Gate");
 	Contact ariane("Ariane", "Saulnier", "AriA", "0612345789", "j'aime les potis chiens");
 	Contact lapinou("Lapinou", "LeGrandLapin", "Lapinou", "0611122233", "j'aime les carottes");
@@ -52,14 +40,16 @@ int	main(){
 	myPhoneBook.addContact(noah);
 	myPhoneBook.addContact(test); // to test overwrite when limit reached
 
-	// Fin [DEBUG] exemple deja rempli avec 8 contacts //////
+	// Fin [DEBUG] exemple deja rempli avec 8 contacts //////////////////////
 
 	std::cout << std::endl;
 	std::cout << BOLD << RED <<"       ********** Welcome to your PhoneBook **********" << RESET << std::endl<< std::endl;
 	std::cout << BOLD << "You can store up to 8 contacts." << RESET << std::endl;
-	std::cout << BOLD << "[DEBUG] Exemple deja rempli avec 8 contacts" << RESET << std::endl;
+	std::cout << BOLD << "[DEBUG] Exemple deja rempli avec 8 contacts" << RESET << std::endl; */
 
-	//PhoneBook book; // decommenter si [DEBUG] exemple deja rempli avec 8 contacts est desactive
+	// /!\ decommenter si [DEBUG] exemple deja rempli avec 8 contacts est desactive
+	PhoneBook myPhoneBook; 
+	// /!\ decommenter si [DEBUG] exemple deja rempli avec 8 contacts est desactive
 	while (g_running) {
 		std::string command;
 		std::cout << std::endl << "Use the commands :"<< MAGENTA << " ADD"<< RESET << ", "<< MAGENTA << "SEARCH"<< RESET << " or" << MAGENTA << " EXIT :" << RESET << std::endl;
