@@ -1,7 +1,7 @@
 #include "FragTrap.hpp"
 
 // default Constructor
-FragTrap::FragTrap(): ClapTrap() {
+FragTrap::FragTrap(): ClapTrap("default", 100, 50, 20, 100) {
 	std::cout << "[FragTrap] default constructor of :" << this << std::endl;
 };
 // parametized string Constructor
