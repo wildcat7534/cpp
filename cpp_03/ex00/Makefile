@@ -1,8 +1,8 @@
 NAME = ClapTrap
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp 
-HEADERS = 
+SRCS = main.cpp ClapTrap.cpp
+HEADERS = ClapTrap.hpp
 OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
 

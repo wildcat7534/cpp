@@ -1,8 +1,8 @@
-NAME = FragTrap
+NAME = animals
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp 
-HEADERS = 
+SRCS = main.cpp Animal.cpp Cat.cpp Dog.cpp
+HEADERS = Animal.hpp Cat.hpp Dog.hpp
 OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
 

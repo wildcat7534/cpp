@@ -1,4 +1,4 @@
-#include <iostream>
+/* #include <iostream>
 #include <climits>
 
 class ClapTrap{
@@ -128,94 +128,14 @@ class ScavTrap : public ClapTrap {
 		void	guardGate(){
 			std::cout << "[ScavTrap] " << this->_name << " in guardGate " << std::endl;			
 		}
-};
+}; */
 
-class FragTrap : public ClapTrap{
+#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
-	public:
-		// default Constructor
-		FragTrap(): ClapTrap() {
-			std::cout << "[FragTrap] default constructor of :" << this << std::endl;
-		};
-		// parametized string Constructor
-		FragTrap(std::string name):ClapTrap(name, 100, 50, 20, 100) {
-			std::cout << "[FragTrap] param constructor of :" << this << std::endl;
-		}
-		// destructor
-		~FragTrap(){
-			std::cout << "...[FragTrap] destructor of :" << this << std::endl;
-		}
-		void	attack(const std::string& target){
-			if (_energyPoint <= 0 || _hitPoint <= 0)
-				std::cout << this->_name << "[FragTrap] no more energy or hitpoint !" << std::endl;
-			else if (target == "")
-			{
-				std::cout << this->_name << "[FragTrap] cannot attack void target !" << std::endl;
-			}
-			else if (this->_attackDamage == 0)
-			{
-				std::cout << this->_name << "[FragTrap] cannot attack with 0 attackDamage !" << std::endl;
-			}
-			else
-			{
-				this->_energyPoint--;
-				std::cout << this->_name << "[FragTrap] attack " << target << " causing " << this->_attackDamage  << std::endl;
-			}
-		}
-		void	highFivesGuys(){
-			std::cout << "[FragTrap] " << this->_name << " request a high five !" << std::endl;			
-		}
-};
-
-class DiamondTrap : public ScavTrap, public FragTrap {
-	private:
-		std::string _name;
-
-	public:
-		// default Constructor
-		DiamondTrap(): ScavTrap() {
-			std::cout << "[DiamondTrap] default constructor of :" << this << std::endl;
-		};
-		// parametized string Constructor
-		DiamondTrap(std::string name):ScavTrap(name) {
-			this->_name = ScavTrap::_name + "_clap_name";
-			std::cout << "[DiamondTrap] param constructor of :" << this << std::endl;
-		}
-		// parametized string Constructor and default values
-		DiamondTrap(std::string name):FragTrap(name), ScavTrap(name) {
-			this->_hitPoint = this->FragTrap::_hitPoint;
-			this->_energyPoint = this->ScavTrap::_energyPoint;
-			this->_attackDamage = this->FragTrap::_attackDamage;
-			std::cout << "[DiamondTrap] param constructor of :" << this << std::endl;
-		}
-		// destructor
-		~DiamondTrap(){
-			std::cout << "...[DiamondTrap] destructor of :" << this << std::endl;
-		}
-		void	attack(const std::string& target){
-			if (ScavTrap::_energyPoint <= 0 || ScavTrap::_hitPoint <= 0)
-				std::cout << this->_name << "[DiamondTrap] no more energy or hitpoint !" << std::endl;
-			else if (target == "")
-			{
-				std::cout << this->_name << "[DiamondTrap] cannot attack void target !" << std::endl;
-			}
-			else if (this->ScavTrap::_attackDamage == 0)
-			{
-				std::cout << this->_name << "[DiamondTrap] cannot attack with 0 attackDamage !" << std::endl;
-			}
-			else
-			{
-				this->_energyPoint--;
-				std::cout << this->_name << "[DiamondTrap] attack " << target << " causing " << this->_attackDamage  << std::endl;
-			}
-		}
-		// new function
-		void	whoAmI(){
-			std::cout << "[DiamondTrap] My name is " << this->_name << " and my ClapTrap name is " << ClapTrap::_name << std::endl;			
-		}
-};
 
 int main (){
+	ClapTrap test("test");
 	ScavTrap robot0;
 	ScavTrap robot1("M. Clapi");
 	ScavTrap robot2("Mme Rainette");

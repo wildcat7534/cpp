@@ -1,7 +1,7 @@
+#include "ClapTrap.hpp"
 
-/* 
 class ClapTrap{
-	protected:
+	private:
 		std::string _name;
 		int			_hitPoint;
 		int			_energyPoint;
@@ -15,19 +15,15 @@ class ClapTrap{
 		};
 		// parametized string Constructor
 		ClapTrap(std::string name) : _name(name), _hitPoint(10), _energyPoint(10), _attackDamage(0), _maxHitPoint(_hitPoint){
-			std::cout << "[ClapTrap] constructor of :" << this << std::endl;
-		}
-		// constructor for derived class
-		ClapTrap(std::string name, int hit, int energy, int attack, int maxHit) : _name(name), _hitPoint(hit), _energyPoint(energy), _attackDamage(attack), _maxHitPoint(maxHit){
-			std::cout << "[ClapTrap] param constructor of :" << this << std::endl;
+			std::cout << "constructor of :" << this << std::endl;
 		}
 		// copy constructor
 		ClapTrap(const ClapTrap &other): _name(other._name),  _hitPoint(other._hitPoint), _energyPoint(other._energyPoint), _attackDamage(other._attackDamage), _maxHitPoint(other._maxHitPoint){
-			std::cout << "[ClapTrap] : " << this << " copy constructor of : " << &other << std::endl;
+			std::cout << this << " copy constructor of : " << &other << std::endl;
 		}
 		// copy assignement operator
 		ClapTrap &operator=(const ClapTrap &other){
-			std::cout << "[ClapTrap] : " << this << " copy assignement operator of :" << &other << std::endl;
+			std::cout << this << " copy assignement operator of :" << &other << std::endl;
 			if (this != &other){
 				_name = other._name;
 				_hitPoint = other._hitPoint;
@@ -38,7 +34,7 @@ class ClapTrap{
 		}
 		// destructor
 		~ClapTrap(){
-			std::cout << "[ClapTrap] destructor of :" << this << std::endl;
+			std::cout << "destructor of :" << this << std::endl;
 		}
 		void	attack(const std::string& target){
 			if (_energyPoint <= 0 || _hitPoint <= 0)
@@ -85,78 +81,4 @@ class ClapTrap{
 		std::string getName() const{
 			return this->_name;
 		}
-}; */
-
-/* class ScavTrap : public ClapTrap{
-
-	public:
-		// default Constructor
-		ScavTrap(): ClapTrap() {
-			std::cout << "[ScavTrap] default constructor of :" << this << std::endl;
-		};
-		// parametized string Constructor
-		ScavTrap(std::string name):ClapTrap(name, 100, 50, 20, 100) {
-			std::cout << "[ScavTrap] constructor of :" << this << std::endl;
-		}
-		// destructor
-		~ScavTrap(){
-			std::cout << "...[ScavTrap] destructor of :" << this << std::endl;
-		}
-		void	attack(const std::string& target){
-			if (_energyPoint <= 0 || _hitPoint <= 0)
-				std::cout << this->_name << "[ScavTrap] no more energy or hitpoint !" << std::endl;
-			else if (target == "")
-			{
-				std::cout << this->_name << "[ScavTrap] cannot attack void target !" << std::endl;
-			}
-			else if (this->_attackDamage == 0)
-			{
-				std::cout << this->_name << "[ScavTrap] cannot attack with 0 attackDamage !" << std::endl;
-			}
-			else
-			{
-				this->_energyPoint--;
-				std::cout << this->_name << "[ScavTrap] attack " << target << " causing " << this->_attackDamage  << std::endl;
-			}
-		}
-		// new function
-		void	guardGate(){
-			std::cout << "[ScavTrap] " << this->_name << " in guardGate " << std::endl;			
-		}
-}; */
-#include "ScavTrap.hpp"
-
-int main (){
-	ScavTrap robot0;
-	ScavTrap robot1("M. Clapi");
-	ScavTrap robot2("Mme Rainette");
-
-	robot2.takeDamage(5);
-	robot2.attack("Robot");
-
-	robot2.guardGate();
-
-	robot1.attack(robot2.getName());
-	
-	robot2.takeDamage(3);
-	robot2.beRepaired(2);
-	robot2.attack(robot1.getName());
-	
-	robot1.takeDamage(0);
-	robot1.attack(robot2.getName());
-
-	robot2.beRepaired(4294967295);
-	robot2.beRepaired(4294967295);
-	robot2.takeDamage(999999999);
-
-	robot2.beRepaired(0);
-
-	ScavTrap robot3(robot2);
-	ScavTrap robot4 = robot1;
-
-	robot3.beRepaired(5);
-	robot1.attack("");
-
-	
-
-}
+};

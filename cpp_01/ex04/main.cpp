@@ -15,6 +15,7 @@ int main (int arc, char **arv){
     std::string stash;
     std::string stash_finale = "";
     std::string buffer;
+    
     if (!file.is_open()){
         std::cerr << "Error opening file: " << arv[1] << std::endl;
         return 1;

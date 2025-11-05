@@ -15,7 +15,7 @@ class Fixed {
 		//copy object
 		Fixed(const Fixed& other);
 		//copy assignement Operator
-		Fixed &operator=(const Fixed &other);
+		Fixed& operator=(const Fixed &other);
 		~Fixed();
 		int getRawBits() const;
 		int toInt() const;
