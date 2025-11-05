@@ -2,22 +2,33 @@
 
 int main()
 {
+	std::cout << std::endl << "----- Testing Fixed class -----" << std::endl << std::endl;
+
 	Fixed a;
 	Fixed const b(10);
 	Fixed const c(42.42f);
 	Fixed const d(b);
 
+	std::cout << std::endl << "----- Testing assignment operator -----" << std::endl << std::endl;
+
 	a = Fixed(1234.4321f);
+
+	std::cout << std::endl << "----- Displaying values -----" << std::endl << std::endl;
 
 	std::cout << "a is " << a << std::endl;
 	std::cout << "b is " << b << std::endl;
 	std::cout << "c is " << c << std::endl;
 	std::cout << "d is " << d << std::endl;
 
+	std::cout << std::endl << "----- Converting to integer -----" << std::endl << std::endl;
+
 	std::cout << "a is " << a.toInt() << " as integer" << std::endl;
 	std::cout << "b is " << b.toInt() << " as integer" << std::endl;
 	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
 	std::cout << "d is " << d.toInt() << " as integer" << std::endl;
+
+	std::cout << std::endl << "----- End of tests (garbage collection) -----" << std::endl << std::endl;
+	
 	return 0;
 }
 
