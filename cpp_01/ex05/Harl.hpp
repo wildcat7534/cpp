@@ -18,5 +18,5 @@ class Harl {
         }
 
     public:
-        void complain(const std::string &level) {};
+        void complain(std::string level);
 };
