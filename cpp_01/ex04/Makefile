@@ -5,7 +5,6 @@ SRCS = main.cpp
 HEADERS = 
 OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
-
 VG = valgrind -s --leak-check=full --show-leak-kinds=all
 
 all: $(NAME)
@@ -50,4 +49,4 @@ test: re
 	@printf "Test 6: Replace \\\\n with '*' in .test6.txt\n"
 	@- $(VG) ./$(NAME) .test6.txt $$'\n' "*"
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test

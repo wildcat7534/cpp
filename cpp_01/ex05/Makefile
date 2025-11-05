@@ -5,7 +5,7 @@ SRCS = main.cpp Harl.cpp
 HEADERS = Harl.hpp
 OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
-
+VG = valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes
 all: $(NAME)
 
 # Compilation: .cpp -> .o initialization
@@ -25,7 +25,7 @@ fclean: clean
 re: fclean all
 
 test: re
-	valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME)
-	valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME) "DEBUG"
+	$(VG) ./$(NAME)
+	$(VG) ./$(NAME) "DEBUG"
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test

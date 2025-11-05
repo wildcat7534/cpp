@@ -5,7 +5,7 @@ SRCS = main.cpp Fixed.cpp
 INCLUDE = Fixed.hpp
 OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
-
+VG = valgrind -s --leak-check=full --show-leak-kinds=all
 all: $(NAME)
 
 %.o: %.cpp $(INCLUDE)
@@ -19,4 +19,8 @@ clean:
 fclean: clean
 		$(RM) $(NAME)
 re: fclean all
-.PHONY: all clean fclean re
+
+test: re
+	$(VG) ./$(NAME)
+
+.PHONY: all clean fclean re test
