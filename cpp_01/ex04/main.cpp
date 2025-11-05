@@ -6,6 +6,10 @@ int main (int arc, char **arv){
         std::cerr << "Invalid arguments. Usage: " << arv[0] << " <filename> <s1> <s2>" << std::endl;
         return 1;
     }
+    if (arv[2][0] == '\0'){
+        std::cerr << "s1 cannot be an empty string." << std::endl;
+        return 1;
+    }
 
     std::ifstream file(arv[1]);
     std::string s1 = arv[2];
@@ -29,7 +33,11 @@ int main (int arc, char **arv){
             stash_finale.append(stash, start, pos - start);
         */
         stash_finale += stash.substr(start, pos - start);
-        stash_finale += s2;
+        if (s2 != "")
+            stash_finale += s2;
+        else
+            stash_finale += s1;
+        
         start = pos + s1.length();
     }
 	stash_finale += stash.substr(start,pos - start);
