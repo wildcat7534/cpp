@@ -42,7 +42,6 @@ int Fixed::toInt() const {
 float Fixed::toFloat() const {
 	return static_cast<float>(_nb) / (1 << _bit);
 }
-
 std::ostream &operator<<(std::ostream &os, const Fixed &f){
 	os << f.toFloat();
 	return os;
