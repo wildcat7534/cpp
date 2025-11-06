@@ -2,7 +2,7 @@
 
 
 // default Constructor
-ScavTrap::ScavTrap(): ClapTrap() {
+ScavTrap::ScavTrap(): ClapTrap("default", 100, 50, 20, 100) {
 	std::cout << "[ScavTrap] default constructor of :" << this << std::endl;
 };
 // parametized string Constructor
