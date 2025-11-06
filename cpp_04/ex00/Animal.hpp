@@ -2,6 +2,7 @@
 # define ANIMAL_HPP
 
 #include <iostream>
+#include <string>
 
 class Animal {
 	protected:
@@ -10,11 +11,11 @@ class Animal {
 	public:
 		Animal();
 		Animal(std::string type);
-		Animal(Animal& other);
+	Animal(const Animal& other);
 		Animal& operator=(const Animal& other);
-		~Animal();
-		void	getType();
-		void	makeSound();
+		virtual ~Animal();
+		virtual std::string	getType() const;
+		virtual void	makeSound() const;
 };
 
 #endif
