@@ -28,8 +28,8 @@ class Contact {
 		std::string	getNickname() const;
 		int			getPhoneNumber() const;
 		std::string	getSecret() const;
-		void		setAll(std::string firstName, std::string lastName, std::string nickname, int phoneNumber,  std::string secret);
-		void 		askAndSetContactInfo();
+		//void		setAll(std::string firstName, std::string lastName, std::string nickname, int phoneNumber,  std::string secret);
+		int 		askAndSetContactInfo();
 		void 		printContactInfo();
 };
 

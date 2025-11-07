@@ -4,7 +4,11 @@
 # include <climits>
 # include <cerrno>
 # include <cstdlib>
+# include <signal.h>
 # include "Contact.hpp"
+# include <signal.h>
+
+extern volatile sig_atomic_t g_running;
 
 bool is_digits(const std::string& s) {
     for (size_t i = 0; i < s.size(); ++i)
@@ -51,21 +55,25 @@ std::string	Contact::getNickname() const{ return _nickname; }
 int			Contact::getPhoneNumber() const { return _phoneNumber; }
 std::string	Contact::getSecret() const{ return _secret; }
 
-void	Contact::setAll(std::string firstName, std::string lastName, std::string nickname, int phoneNumber,  std::string secret){
-	this->_firstName = firstName;
-	this->_lastName = lastName;
-	this->_nickname = nickname;
-	this->_phoneNumber = phoneNumber;
-	this->_secret = secret;
-}
-void	Contact::askAndSetContactInfo(){
+// void	Contact::setAll(std::string firstName, std::string lastName, std::string nickname, int phoneNumber,  std::string secret){
+// 	this->_firstName = firstName;
+// 	this->_lastName = lastName;
+// 	this->_nickname = nickname;
+// 	this->_phoneNumber = phoneNumber;
+// 	this->_secret = secret;
+// }
+int	Contact::askAndSetContactInfo(){
 	std::string firstName;
 	std::string lastName;
 	std::string nickname;
 	std::string	phoneNumber;
 	std::string darkSecret;
 	std::cout << "	Enter first name: ";
-		while (getline(std::cin, firstName)){
+		while (g_running){
+			if (!getline(std::cin, firstName)) {
+				std::cout << std::endl << "********* [CONTACT] have you got a problem ? ***********" << std::endl;
+				return 0;
+			}
 			if (firstName == ""){
 				std::cout << "cannot be void !" << std::endl;
 				std::cout << "	Enter first name: ";
@@ -75,8 +83,12 @@ void	Contact::askAndSetContactInfo(){
 				break;
 			}
 		}
-		std::cout << "	Enter last name: ";
-		while (getline(std::cin, lastName)){
+		while (g_running){
+			std::cout << "	Enter last name: ";
+			if (!getline(std::cin, lastName)) {
+					std::cout << std::endl << "********* [CONTACT] have you got a problem ? ***********" << std::endl;
+				return 0;
+			}
 			if (lastName == ""){
 				std::cout << "cannot be void !" << std::endl;
 				std::cout << "	Enter last name: ";
@@ -87,7 +99,11 @@ void	Contact::askAndSetContactInfo(){
 			}
 		}
 		std::cout << "	Enter nickname : ";
-		while (getline(std::cin, nickname)){
+		while (g_running){
+			if (!getline(std::cin, nickname)){
+				std::cout << std::endl << "********* [CONTACT] have you got a problem ? ***********" << std::endl;
+				return 0;
+			}
 			if (nickname == ""){
 				std::cout << "cannot be void !" << std::endl;
 				std::cout << "	Enter nickname : ";
@@ -98,7 +114,11 @@ void	Contact::askAndSetContactInfo(){
 			}
 		}
 		std::cout << "	Enter phone number: ";
-		while (getline(std::cin, phoneNumber)){
+		while (g_running){
+			if (!getline(std::cin, phoneNumber)){
+				std::cout << std::endl << "********* [CONTACT] have you got a problem ? ***********" << std::endl;
+				return 0;
+			}
 			if (phoneNumber == ""){
 				std::cout << "cannot be void !" << std::endl;
 				std::cout << "	Enter phone number: ";
@@ -119,7 +139,11 @@ void	Contact::askAndSetContactInfo(){
 			}
 		}
 		std::cout << "	Enter darki secret (or not so dark..): ";
-		while (getline(std::cin, darkSecret)){
+		while (g_running){
+			if (!getline(std::cin, darkSecret)){
+				std::cout << std::endl << "********* [CONTACT] have you got a problem ? ***********" << std::endl;
+				return 0;
+			}
 			if (darkSecret == ""){
 				std::cout << "cannot be void !" << std::endl;
 				std::cout << "	Enter darki secret (or not so dark..): ";
@@ -129,6 +153,7 @@ void	Contact::askAndSetContactInfo(){
 				break;
 			}
 		}
+		return 1;
 }
 void	Contact::printContactInfo(){
 	std::cout << "First Name: " << getFirstName() << std::endl;

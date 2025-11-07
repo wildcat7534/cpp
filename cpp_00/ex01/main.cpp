@@ -8,8 +8,8 @@ volatile sig_atomic_t g_running = 1;
 // Signal handler: write a message, close stdin to interrupt getline and
 // set the running flag so main loop can exit cleanly (destructors run).
 void signalHandler(int /*signum*/) {
-	std::cout << "\n*********  Interruption signal received. Exiting... ***********" << std::endl;
 	g_running = 0;
+	std::cout << "\n*********  Interruption signal received. Exiting... ***********" << std::endl;
 	close(STDIN_FILENO); // async-signal-safe: will make getline fail with EOF/error
 }
 
@@ -17,8 +17,8 @@ int	main(){
 	signal(SIGINT, signalHandler);
 	signal(SIGTERM, signalHandler);
 
-
-/* 	// [DEBUG] exemple deja rempli avec 8 contacts /////////////////////////
+/*
+ 	// [DEBUG] exemple deja rempli avec 8 contacts /////////////////////////
 	Contact clement("Clement", "Massol", "WiLDCaT", "0612270367", "j'aime Baldur's Gate");
 	Contact ariane("Ariane", "Saulnier", "AriA", "0612345789", "j'aime les potis chiens");
 	Contact lapinou("Lapinou", "LeGrandLapin", "Lapinou", "0611122233", "j'aime les carottes");
@@ -56,7 +56,7 @@ int	main(){
 		std::cout << ">>> ";
 		if (!std::getline(std::cin, command))
 		{
-			std::cout << std::endl << "*********  Avez-vous un probleme ? ***********" << std::endl;
+			std::cout << std::endl << "*********  have you got a problem ? ***********" << std::endl;
 			break;
 		}
 		if (!g_running) {

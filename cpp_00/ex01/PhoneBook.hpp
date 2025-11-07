@@ -3,12 +3,15 @@
 
 #include <string>
 #include "Contact.hpp"
+#include <signal.h>
 
 #define RED     "\033[31m"
 #define MAGENTA "\033[35m"
 #define CYAN    "\033[36m"
 #define BOLD    "\033[1m"
 #define RESET   "\033[0m"
+
+extern volatile sig_atomic_t g_running;
 
 class PhoneBook {
 	private:

@@ -57,7 +57,10 @@ void	PhoneBook::addContact(){
 		return ;
 	}
 	Contact 	newContact;
-	newContact.askAndSetContactInfo();
+	if (!newContact.askAndSetContactInfo()) {
+		std::cout << std::endl << ">> /!\\ Contact creation cancelled." << std::endl;
+		return ;
+	}
 	newContact.printContactInfo();
 
 	std::cout << std::endl << ">> Saving contact... please wait..." << std::endl;
@@ -100,7 +103,11 @@ void PhoneBook::searchContact() {
 	std::cout << std::endl;
 	std::string id;
 	std::cout << "select ID and we will search it for you :) : ";
-	getline(std::cin, id);
+
+	if (!g_running || !getline(std::cin, id)) {
+		std::cout << std::endl << "*********  have you got a problem ? ***********" << std::endl;
+		return ;
+	}
 	if (id.empty()) {
 		std::cout << "ID cannot be empty." << std::endl;
 		return ;
