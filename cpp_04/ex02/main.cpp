@@ -66,7 +66,10 @@ qu’Animal. Les destructeurs correspondants doivent être appelés dans le bon 
 	for (int i = 0; i < size; i++)
 		delete animals[i];
 
-	
+	std::cout << "------------ABSTRACT TEST------" << std::endl;
+    Animal* gato = new Cat();
+    gato->makeSound(); // appelle Cat::makeSound()
+    delete gato;
 
 	return 0;
 
