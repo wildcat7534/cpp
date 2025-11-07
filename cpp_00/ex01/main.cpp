@@ -16,7 +16,6 @@ void signalHandler(int /*signum*/) {
 int	main(){
 	signal(SIGINT, signalHandler);
 	signal(SIGTERM, signalHandler);
-
 /*
  	// [DEBUG] exemple deja rempli avec 8 contacts /////////////////////////
 	Contact clement("Clement", "Massol", "WiLDCaT", "0612270367", "j'aime Baldur's Gate");
@@ -41,18 +40,18 @@ int	main(){
 	myPhoneBook.addContact(test); // to test overwrite when limit reached
 
 	// Fin [DEBUG] exemple deja rempli avec 8 contacts //////////////////////
-
+*/
 	std::cout << std::endl;
 	std::cout << BOLD << RED <<"       ********** Welcome to your PhoneBook **********" << RESET << std::endl<< std::endl;
 	std::cout << BOLD << "You can store up to 8 contacts." << RESET << std::endl;
-	std::cout << BOLD << "[DEBUG] Exemple deja rempli avec 8 contacts" << RESET << std::endl; */
+	std::cout << BOLD << "[DEBUG] Exemple deja rempli avec 8 contacts" << RESET << std::endl; 
 
 	// /!\ decommenter si [DEBUG] exemple deja rempli avec 8 contacts est desactive
 	PhoneBook myPhoneBook; 
 	// /!\ decommenter si [DEBUG] exemple deja rempli avec 8 contacts est desactive
 	while (g_running) {
 		std::string command;
-		std::cout << std::endl << "Use the commands :"<< MAGENTA << " ADD"<< RESET << ", "<< MAGENTA << "SEARCH"<< RESET << " or" << MAGENTA << " EXIT :" << RESET << std::endl;
+		std::cout << std::endl << "Use the commands :"<< MAGENTA << " ADD" << RESET << ", "<< MAGENTA << "SEARCH"<< RESET << " or" << MAGENTA << " EXIT :" << RESET << std::endl;
 		std::cout << ">>> ";
 		if (!std::getline(std::cin, command))
 		{
@@ -62,12 +61,10 @@ int	main(){
 		if (!g_running) {
 			break;
 		}
-
 		if (command == "ADD"){
 			std::cout << "** Command: "<< MAGENTA << command << RESET << " received." << std::endl;
 			myPhoneBook.addContact();
 		}
-
 		if (command == "SEARCH"){
 			std::cout << "** Command: " << MAGENTA << command << RESET << " received." << std::endl;
 			std::cout << std::endl;
@@ -78,5 +75,4 @@ int	main(){
 			break;
 		}
 	}
-
 }

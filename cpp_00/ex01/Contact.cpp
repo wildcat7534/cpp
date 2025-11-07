@@ -55,13 +55,6 @@ std::string	Contact::getNickname() const{ return _nickname; }
 int			Contact::getPhoneNumber() const { return _phoneNumber; }
 std::string	Contact::getSecret() const{ return _secret; }
 
-// void	Contact::setAll(std::string firstName, std::string lastName, std::string nickname, int phoneNumber,  std::string secret){
-// 	this->_firstName = firstName;
-// 	this->_lastName = lastName;
-// 	this->_nickname = nickname;
-// 	this->_phoneNumber = phoneNumber;
-// 	this->_secret = secret;
-// }
 int	Contact::askAndSetContactInfo(){
 	std::string firstName;
 	std::string lastName;
@@ -79,12 +72,18 @@ int	Contact::askAndSetContactInfo(){
 				std::cout << "	Enter first name: ";
 			}
 			else{
-				setFirstName(firstName);
+				if (firstName.length() > LIMIT_STRING_LENGTH) {
+					std::cout << "First name too long (max " << LIMIT_STRING_LENGTH << " characters)." << std::endl;
+					std::cout << "	Enter first name: ";
+					continue;
+				}
+				else
+					setFirstName(firstName);
 				break;
 			}
 		}
+		std::cout << "	Enter last name: ";
 		while (g_running){
-			std::cout << "	Enter last name: ";
 			if (!getline(std::cin, lastName)) {
 					std::cout << std::endl << "********* [CONTACT] have you got a problem ? ***********" << std::endl;
 				return 0;
@@ -94,7 +93,13 @@ int	Contact::askAndSetContactInfo(){
 				std::cout << "	Enter last name: ";
 			}
 			else{
-				setLastName(lastName);
+				if (lastName.length() > LIMIT_STRING_LENGTH) {
+					std::cout << "Last name too long (max " << LIMIT_STRING_LENGTH << " characters)." << std::endl;
+					std::cout << "	Enter last name: ";
+					continue;
+				}
+				else
+					setLastName(lastName);
 				break;
 			}
 		}
@@ -109,7 +114,13 @@ int	Contact::askAndSetContactInfo(){
 				std::cout << "	Enter nickname : ";
 			}
 			else{
-				setNickname(nickname);
+				if (nickname.length() > LIMIT_STRING_LENGTH) {
+					std::cout << "Nickname too long (max " << LIMIT_STRING_LENGTH << " characters)." << std::endl;
+					std::cout << "	Enter nickname : ";
+					continue;
+				}
+				else
+					setNickname(nickname);
 				break;
 			}
 		}
@@ -149,7 +160,13 @@ int	Contact::askAndSetContactInfo(){
 				std::cout << "	Enter darki secret (or not so dark..): ";
 			}
 			else{
-				this->setSecret(darkSecret);
+				if (darkSecret.length() > LIMIT_STRING_LENGTH) {
+					std::cout << "Dark secret too long (max " << LIMIT_STRING_LENGTH << " characters)." << std::endl;
+					std::cout << "	Enter darki secret (or not so dark..): ";
+					continue;
+				}
+				else
+					setSecret(darkSecret);
 				break;
 			}
 		}

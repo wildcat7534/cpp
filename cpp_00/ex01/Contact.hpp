@@ -5,6 +5,8 @@
 # include <string>
 # include <iomanip>
 
+const int LIMIT_STRING_LENGTH = 20;
+
 class Contact {
 	private:
 		std::string _firstName;
@@ -28,7 +30,6 @@ class Contact {
 		std::string	getNickname() const;
 		int			getPhoneNumber() const;
 		std::string	getSecret() const;
-		//void		setAll(std::string firstName, std::string lastName, std::string nickname, int phoneNumber,  std::string secret);
 		int 		askAndSetContactInfo();
 		void 		printContactInfo();
 };
