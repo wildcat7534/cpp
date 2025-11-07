@@ -40,12 +40,13 @@ int	main(){
 	wrongCat->makeSound();
 	wrongMeta->makeSound();
 
+	std::cout << "------------DESTRUCTORS------" << std::endl;
 	delete wrongMeta;
 	delete wrongCat;
 	delete meta;
 	delete j;
 	delete i;
-
-
+	
+	return 0;
 
 }
