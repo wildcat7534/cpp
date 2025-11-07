@@ -15,10 +15,6 @@ int	main(){
 	j->makeSound();
 	meta->makeSound();
 
-/* 	delete meta;
-	delete j;
-	delete i; */
-
 	std::cout << "------------------" << std::endl;
 	
 	Cat chat1("Cat");
@@ -35,7 +31,7 @@ int	main(){
 	
 	Dog dog2 = dog1;
 	dog2.makeSound();
-	
+
 	std::cout << "------------WRONG------" << std::endl;
 
 	const WrongAnimal* wrongMeta = new WrongAnimal();
@@ -44,7 +40,11 @@ int	main(){
 	wrongCat->makeSound();
 	wrongMeta->makeSound();
 
-	//chat2.makeSound();	
+	delete wrongMeta;
+	delete wrongCat;
+	delete meta;
+	delete j;
+	delete i;
 
 
 
