@@ -1,11 +1,12 @@
+SHELL := /bin/bash
 NAME = sed
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp 
-HEADERS = 
+SRCS = main.cpp Replace.cpp
+HEADERS = Replace.hpp
 OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
-VG = valgrind -s --leak-check=full --show-leak-kinds=all
+VG ?= valgrind -s --leak-check=full --show-leak-kinds=all
 
 all: $(NAME)
 
@@ -48,5 +49,7 @@ test: re
 
 	@printf "Test 6: Replace \\\\n with '*' in .test6.txt\n"
 	@- $(VG) ./$(NAME) .test6.txt $$'\n' "*"
+
+	@printf "\nAll tests completed.\n"
 
 .PHONY: all clean fclean re test
