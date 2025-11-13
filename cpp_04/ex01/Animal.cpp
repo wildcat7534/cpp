@@ -11,12 +11,7 @@ Animal::Animal(std::string type): _type(type) {
 
 Animal::Animal(const Animal& other){
 	std::cout << "Animal Copy Constructor called" << std::endl;
-	if (this != &other)
-		this->_type = other._type;
-}
-
-Animal::~Animal(){
-	std::cout << "Animal Destructor called" << std::endl;
+	this->_type = other._type;
 }
 
 Animal& Animal::operator=(const Animal& other){
@@ -26,10 +21,19 @@ Animal& Animal::operator=(const Animal& other){
 	return *this;
 }
 
+Animal::~Animal(){
+	std::cout << "Animal Destructor called" << std::endl;
+}
+
 std::string Animal::getType() const {
 	return this->_type;
 }
 
 void Animal::makeSound() const {
 	std::cout << "Animals make sound" << std::endl;
+}
+
+void Animal::showThought(int index) const {
+	(void)index;
+	std::cout << "Animal Class == no brain in function " << std::endl;
 }
